@@ -2,6 +2,7 @@ import { userRepository } from "../repositories/user.repository";
 import { hashPassword, comparePassword } from "../utils/password";
 import { signToken } from "../utils/jwt";
 import { RegisterDto, LoginDto } from "../dto/auth.dto";
+import { prisma } from "../prisma/client";
 
 export const authService = {
   async register(data: RegisterDto) {
@@ -38,4 +39,16 @@ export const authService = {
 
     return { user, token };
   },
+
+  async getMe(userId: string) {
+    return prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        createdAt: true,
+      },
+    });
+  }
 };

@@ -36,7 +36,21 @@ export const authController = {
       email: user.email,
     });
   },
+  async  getMe(req: Request, res: Response) {
+  const userId = req.user?.id;
 
+  if (!userId) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  const user = await authService.getMe(userId);
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  res.json(user);
+},
   logout(req: Request, res: Response) {
     res.clearCookie("token");
     res.json({ message: "Logged out" });

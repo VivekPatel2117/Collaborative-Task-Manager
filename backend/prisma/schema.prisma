@@ -4,7 +4,21 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-   url      = env("DATABASE_URL")
+  url      = env("DIRECT_URL")
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum Status {
+  TODO
+  IN_PROGRESS
+  REVIEW
+  COMPLETED
 }
 
 model User {
@@ -13,7 +27,6 @@ model User {
   email     String   @unique
   password  String
 
-  // Relations
   tasksCreated  Task[] @relation("TaskCreator")
   tasksAssigned Task[] @relation("TaskAssignee")
 
@@ -35,7 +48,6 @@ model Task {
   creatorId     String
   assignedToId  String
 
-  // Relations
   creator   User @relation("TaskCreator", fields: [creatorId], references: [id], onDelete: Cascade)
   assignee  User @relation("TaskAssignee", fields: [assignedToId], references: [id], onDelete: Cascade)
 
@@ -47,18 +59,4 @@ model Task {
   @@index([status])
   @@index([priority])
   @@map("tasks")
-}
-
-enum Priority {
-  LOW
-  MEDIUM
-  HIGH
-  URGENT
-}
-
-enum Status {
-  TODO
-  IN_PROGRESS
-  REVIEW
-  COMPLETED
 }
