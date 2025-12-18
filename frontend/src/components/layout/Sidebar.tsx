@@ -5,7 +5,7 @@ export default function Sidebar() {
   return (
     <aside className=" md:flex w-64 flex-col border-r bg-background">
       <div className="h-16 px-6 flex items-center font-semibold text-lg">
-        AbleSpace
+        Task Manager
       </div>
 
       <nav className="flex-1 px-3 space-y-1">

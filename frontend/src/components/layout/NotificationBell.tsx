@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Bell, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { socket } from "../socket";
+import { socket } from "../../socket";
 import {
   getNotifications,
   markNotificationRead,

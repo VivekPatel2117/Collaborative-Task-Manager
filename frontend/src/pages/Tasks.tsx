@@ -5,6 +5,7 @@ import { getTasks } from "@/services/task.service";
 import TaskTable from "@/components/tasks/TaskTable";
 import TaskFormModal from "@/components/tasks/TaskFormModal";
 import { Button } from "@/components/ui/button";
+import TasksSkeleton from "@/components/skeletons/TasksSkeleton";
 export default function Tasks() {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(1);
@@ -16,7 +17,7 @@ export default function Tasks() {
     queryFn: () => getTasks({page, limit}),
   });
 
-  if (isLoading) return <div>Loading tasks...</div>;
+  if (isLoading) return <TasksSkeleton/>;
 
   const tasks = data?.data ?? [];
   const totalPages = data?.totalPages!;

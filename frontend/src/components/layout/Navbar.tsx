@@ -10,7 +10,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Sidebar from "./Sidebar";
 import { useNavigate } from "react-router-dom";
-import NotificationBell from "../NotificationBell";
+import NotificationBell from "./NotificationBell";
 
 export default function Navbar() {
     const { user } = useAuth();

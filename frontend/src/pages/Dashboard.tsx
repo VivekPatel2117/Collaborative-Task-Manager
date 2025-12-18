@@ -1,12 +1,13 @@
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
-import TaskTable from "@/components/TaskTable";
-import TaskFilters from "@/components/TaskFilters";
-import TaskStats from "@/components/TaskStats";
+import TaskTable from "@/components/Dashboard/TaskTable";
+import TaskFilters from "@/components/Dashboard/TaskFilters";
+import TaskStats from "@/components/Dashboard/TaskStats";
 import { getTasks } from "@/services/task.service";
 import type { Priority, Status, Task } from "@/types/task";
 import { useAuth } from "@/hooks/useAuth";
+import DashboardSkeleton from "@/components/skeletons/DashboardSkeleton";
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -51,7 +52,7 @@ export default function Dashboard() {
 
   /* ---------------- UI STATES ---------------- */
   if (isLoading) {
-    return <div className="p-6">Loading dashboard...</div>;
+    return <DashboardSkeleton/>
   }
 
   if (isError) {
