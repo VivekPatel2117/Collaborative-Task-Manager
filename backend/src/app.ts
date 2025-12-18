@@ -9,7 +9,6 @@ import notificationRoutes from "./routes/notification.routes";
 const app = express();
 import http from "http";
 import { initSocket } from "./socket";
-import { io } from "./socket";
 const server = http.createServer(app);
 initSocket(server);
 

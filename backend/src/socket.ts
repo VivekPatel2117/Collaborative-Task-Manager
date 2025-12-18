@@ -5,7 +5,7 @@ export let io: Server;
 export const initSocket = (httpServer: any) => {
   io = new Server(httpServer, {
     cors: {
-      origin: "*",
+      origin: process.env.CLIENT_URL,
     },
   });
 
