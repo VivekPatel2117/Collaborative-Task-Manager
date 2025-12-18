@@ -95,7 +95,7 @@ export default function TaskFormModal({ open, onClose, task }: Props) {
   /* ---------------- RENDER ---------------- */
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent>
+      <DialogContent className="bg-white">
         <DialogHeader>
           {task ? "Update Task" : "Create Task"}
         </DialogHeader>

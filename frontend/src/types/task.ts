@@ -12,3 +12,14 @@ export interface Task {
   assignedToId: string;
   createdAt: string;
 }
+
+
+export type PaginatedTasksResponse<Task> = {
+  data: Task[];
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+};

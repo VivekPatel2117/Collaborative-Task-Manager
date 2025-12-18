@@ -22,10 +22,10 @@ export default function DeleteTaskDialog({
 
   return (
     <AlertDialog open onOpenChange={onClose}>
-      <AlertDialogContent>
+      <AlertDialogContent className="bg-white">
         <p>Are you sure you want to delete this task?</p>
         <div className="flex gap-3 mt-4">
-          <Button variant="destructive" onClick={() => mutation.mutate()}>
+          <Button variant="destructive" className="bg-red-500" onClick={() => mutation.mutate()}>
             Delete
           </Button>
           <Button variant="outline" onClick={onClose}>

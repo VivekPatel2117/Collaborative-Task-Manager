@@ -72,7 +72,7 @@ export default function TaskFilters({
           onSortChange(sortByDueDate === "asc" ? "desc" : "asc")
         }
       >
-        ↑↓ Sort by Due Date {sortByDueDate === "asc" ? "↑" : "↓"}
+        Sort by Due Date {sortByDueDate === "asc" ? "↑" : "↓"}
       </Button>
 
     </div>

@@ -76,7 +76,7 @@ function TaskBox({
   <CardContent className="p-5 space-y-4">
     {/* HEADER */}
     <div className="flex items-center justify-between">
-      <h3 className="text-sm font-semibold flex gap-1 items-center"><Icon className="bg-primary/10 text-primary"></Icon>{title}</h3>
+      <h3 className="text-sm font-semibold flex gap-1 items-center"><Icon className="text-primary"></Icon>{title}</h3>
       <Button
         variant="ghost"
         size="sm"

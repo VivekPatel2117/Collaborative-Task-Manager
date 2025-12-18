@@ -11,7 +11,10 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("Client connected:", socket.id);
+ socket.on("join", (userId: string) => {
+    socket.join(`user:${userId}`);
+    console.log(`👤 User ${userId} joined room user:${userId}`);
+  });
 });
 
 const PORT = process.env.PORT || 5000;

@@ -5,7 +5,7 @@ import TaskTable from "@/components/TaskTable";
 import TaskFilters from "@/components/TaskFilters";
 import TaskStats from "@/components/TaskStats";
 import { getTasks } from "@/services/task.service";
-import type { Task, Priority, Status } from "@/types/task";
+import type { Priority, Status, Task } from "@/types/task";
 import { useAuth } from "@/hooks/useAuth";
 
 export default function Dashboard() {
@@ -15,15 +15,18 @@ export default function Dashboard() {
   const [priority, setPriority] = useState<Priority | "all">("all");
   const [sortByDueDate, setSortByDueDate] = useState<"asc" | "desc">("asc");
 
-  /* ---------------- FETCH TASKS FROM DB ---------------- */
+  /* ---------------- FETCH TASKS (PAGE 1) ---------------- */
   const {
-    data: tasks = [],
+    data,
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["tasks"],
-    queryFn: getTasks,
+    queryKey: ["tasks", "dashboard"],
+    queryFn: () => getTasks({ page: 1, limit: 3 }), // 👈 fetch enough for dashboard
   });
+
+  // ✅ IMPORTANT: extract array safely
+  const tasks: Task[] = data?.data ?? [];
 
   /* ---------------- FILTER + SORT ---------------- */
   const filteredTasks = useMemo(() => {
@@ -62,46 +65,44 @@ export default function Dashboard() {
   /* ---------------- RENDER ---------------- */
   return (
     <div className="p-8 space-y-8 bg-background">
-  {/* HEADER */}
-  <div>
-    <h1 className="text-3xl font-semibold">
-      User Dashboard
-    </h1>
-    <p className="text-sm text-muted-foreground mt-1">
-      Track your tasks and stay organized
-    </p>
-  </div>
-
-  {/* STATS */}
-  {user && (
-    <TaskStats tasks={tasks} currentUser={user.id} />
-  )}
-
-  {/* FILTERS + TABLE */}
-  <div className="space-y-4 rounded-xl border bg-card p-6">
-    <TaskFilters
-      status={status}
-      priority={priority}
-      sortByDueDate={sortByDueDate}
-      onStatusChange={setStatus}
-      onPriorityChange={setPriority}
-      onSortChange={setSortByDueDate}
-    />
-
-    <TaskTable tasks={filteredTasks.slice(0, 3)} />
-
-    {filteredTasks.length > 3 && (
-      <div className="flex justify-end">
-        <button
-          className="text-sm text-primary font-medium hover:underline"
-          onClick={() => (window.location.href = "/tasks")}
-        >
-          See more →
-        </button>
+      {/* HEADER */}
+      <div>
+        <h1 className="text-3xl font-semibold">User Dashboard</h1>
+        <p className="text-sm text-muted-foreground mt-1">
+          Track your tasks and stay organized
+        </p>
       </div>
-    )}
-  </div>
-</div>
 
+      {/* STATS */}
+      {user && (
+        <TaskStats tasks={tasks} currentUser={user.id} />
+      )}
+
+      {/* FILTERS + TABLE */}
+      <div className="space-y-4 rounded-xl border bg-card p-6">
+        <TaskFilters
+          status={status}
+          priority={priority}
+          sortByDueDate={sortByDueDate}
+          onStatusChange={setStatus}
+          onPriorityChange={setPriority}
+          onSortChange={setSortByDueDate}
+        />
+
+        {/* show only first 3 */}
+        <TaskTable tasks={filteredTasks.slice(0, 3)} />
+
+        {filteredTasks.length > 3 && (
+          <div className="flex justify-end">
+            <button
+              className="text-sm text-primary font-medium hover:underline"
+              onClick={() => (window.location.href = "/tasks")}
+            >
+              See more →
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

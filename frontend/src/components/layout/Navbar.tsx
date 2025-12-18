@@ -10,6 +10,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Sidebar from "./Sidebar";
 import { useNavigate } from "react-router-dom";
+import NotificationBell from "../NotificationBell";
 
 export default function Navbar() {
     const { user } = useAuth();
@@ -18,16 +19,17 @@ export default function Navbar() {
   return (
     <header className="h-16 border-b bg-background flex items-center justify-between px-4">
       {/* Mobile Sidebar */}
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button variant="ghost" size="icon" className="md:hidden">
-            <Menu size={20} />
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="left" className="p-0">
-          <Sidebar />
-        </SheetContent>
-      </Sheet>
+    <Sheet>
+  <SheetTrigger asChild>
+    <Button variant="ghost" size="icon" className="md:hidden">
+      <Menu size={20} />
+    </Button>
+  </SheetTrigger>
+
+  <SheetContent side="left" className="p-4">
+    <Sidebar />
+  </SheetContent>
+</Sheet>
 
       <div className="font-semibold hidden md:block">
         Dashboard
@@ -37,9 +39,7 @@ export default function Navbar() {
           <div className="text-sm">
         {user?.name.split(" ")[0]}
       </div>
-        <Button variant="ghost" size="icon">
-          <Bell size={18} />
-        </Button>
+       <NotificationBell/>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

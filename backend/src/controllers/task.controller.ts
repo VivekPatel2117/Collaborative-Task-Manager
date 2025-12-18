@@ -18,14 +18,40 @@ export const createTask = async (req: Request, res: Response) => {
 };
 
 export const getTasks = async (req: Request, res: Response) => {
-  const tasks = await TaskService.getAll({
-    assignedToId: req.query.assignedToId as string,
-    status: req.query.status as any,
-    priority: req.query.priority as any,
-  });
+  const page = Math.max(Number(req.query.page) || 1, 1);
+  const limit = Math.min(Number(req.query.limit) || 5, 50); // cap limit
+  const skip = (page - 1) * limit;
 
-  res.json(tasks);
+  const [tasks, total] = await Promise.all([
+    TaskService.getAll({
+      assignedToId: req.query.assignedToId as string,
+      status: req.query.status as any,
+      priority: req.query.priority as any,
+      skip,
+      take: limit,
+    }),
+    TaskService.count({
+      assignedToId: req.query.assignedToId as string,
+      status: req.query.status as any,
+      priority: req.query.priority as any,
+    }),
+  ]);
+
+  res.json({
+    data: tasks,
+    pagination: {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
+      hasNextPage: page * limit < total,
+      hasPrevPage: page > 1,
+    },
+  });
 };
+
+
+
 
 export const getTaskById = async (req: Request, res: Response) => {
   const task = await TaskService.getById(req.params.id);
@@ -40,15 +66,16 @@ export const getTaskById = async (req: Request, res: Response) => {
 export const updateTask = async (req: Request, res: Response) => {
   const data = updateTaskSchema.parse(req.body);
 
-  const task = await TaskService.update(req.params.id, {
+  const task = await TaskService.update(req.params.id,req.user!.id, {
     ...data,
     dueDate: data.dueDate ? new Date(data.dueDate) : undefined,
   });
+  
 
   res.json(task);
 };
 
 export const deleteTask = async (req: Request, res: Response) => {
-  await TaskService.delete(req.params.id);
-  res.status(204).send();
+  await TaskService.delete(req.params.id, req.user!.id);
+  res.status(200).json({success: true});
 };

@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import AppLayout from "./components/layout/AppLayout";
 import Tasks from "./pages/Tasks";
 import Profile from "./pages/Profile";
+
 // Create Query Client
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,6 +25,7 @@ export default function App() {
       <BrowserRouter>
        <Routes>
   {/* Auth Routes */}
+  <Route path="/" element={<Navigate to="/login" />} />
   <Route path="/login" element={<Login />} />
   <Route path="/register" element={<Register />} />
 
