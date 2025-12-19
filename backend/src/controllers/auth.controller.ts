@@ -6,7 +6,8 @@ const COOKIE_OPTIONS = {
   httpOnly: true,
   secure: true,
   sameSite: "none" as const ,
-  maxAge: 24 * 60 * 60 * 1000
+  maxAge: 24 * 60 * 60 * 1000,
+  partitioned: true,
 }
 
 export const authController = {
