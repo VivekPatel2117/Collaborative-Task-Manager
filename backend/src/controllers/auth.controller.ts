@@ -39,7 +39,7 @@ export const authController = {
   },
   async  getMe(req: Request, res: Response) {
   const userId = req.user?.id;
-
+  console.log("User ID from token:", userId);
   if (!userId) {
     return res.status(401).json({ message: "Unauthorized" });
   }
