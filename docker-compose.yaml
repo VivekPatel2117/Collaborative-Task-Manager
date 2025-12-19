@@ -1,0 +1,24 @@
+services:
+  # --- Backend ---
+  backend:
+    build: ./backend
+    container_name: task-manager-be
+    ports:
+      - "5000:5000"
+    environment:
+      # Paste your Supabase Connection String here
+      - DATABASE_URL=postgresql://postgres:[YOUR-PASSWORD]@db.[YOUR-PROJECT-REF].supabase.co:5432/postgres
+      - JWT_SECRET=your_super_secret_key
+      - NODE_ENV=development
+    # No more 'depends_on' needed because the DB is in the cloud
+
+  # --- Frontend ---
+  frontend:
+    build: ./frontend
+    container_name: task-manager-fe
+    ports:
+      - "80:80"
+    environment:
+      - VITE_API_URL=http://localhost:5000
+    depends_on:
+      - backend
