@@ -5,9 +5,10 @@ import { registerDto, loginDto } from "../dto/auth.dto";
 const COOKIE_OPTIONS = {
   httpOnly: true,
   secure: true,
-  sameSite: "none" as const ,
+  sameSite: "lax" as const, // Use "lax" for subdomains; it's more reliable than "none"
+  domain: ".my-app.com",    // The dot before the name allows all subdomains
   maxAge: 24 * 60 * 60 * 1000,
-  partitioned: true,
+  partitioned: true         // Keep this for extra compatibility
 }
 
 export const authController = {
