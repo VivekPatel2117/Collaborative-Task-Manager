@@ -6,6 +6,7 @@ import { toast } from "react-hot-toast";
 import type { Task } from "@/types/task";
 
 export const useTaskSocket = (user: any) => {
+  
   useEffect(() => {
     // If no user yet (still loading), don't do anything
     if (!user?.id) return;
@@ -14,10 +15,13 @@ export const useTaskSocket = (user: any) => {
     const { addNotification } = useNotificationStore.getState();
 
     const joinRoom = () => {
-      console.log(`🔑 Joining socket room: ${user.id}`);
-      // If your backend expects "user:ID", use: socket.emit("join", `user:${user.id}`);
-      socket.emit("join", user.id); 
-    };
+  if (user?.id) {
+    // We add "user:" to match what the backend logs showed
+    const roomName = `user:${user.id}`; 
+    console.log(`🔑 Joining socket room: ${roomName}`);
+    socket.emit("join", user.id); // Or socket.emit("join", roomName) depending on backend logic
+  }
+};
 
     const onConnect = () => {
       console.log("%c🔌 Socket Connected:", "color: #00ff00; font-weight: bold;", socket.id);
