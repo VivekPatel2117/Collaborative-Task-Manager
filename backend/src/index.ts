@@ -16,8 +16,9 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
  socket.on("join", (userId: string) => {
-    socket.join(`user:${userId}`);
-    console.log(`👤 User ${userId} joined room user:${userId}`);
+   const roomName = `user:${userId}`; 
+    socket.join(roomName);
+    console.log(`👤 User ${userId} joined room: ${roomName}`);
   });
 });
 

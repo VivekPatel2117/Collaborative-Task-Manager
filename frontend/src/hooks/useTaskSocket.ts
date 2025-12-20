@@ -16,10 +16,9 @@ export const useTaskSocket = (user: any) => {
 
     const joinRoom = () => {
   if (user?.id) {
-    // We add "user:" to match what the backend logs showed
-    const roomName = `user:${user.id}`; 
-    console.log(`🔑 Joining socket room: ${roomName}`);
-    socket.emit("join", user.id); // Or socket.emit("join", roomName) depending on backend logic
+    console.log(`🔑 Requesting to join room for user: ${user.id}`);
+    // Just send the ID; let the backend handle the "user:" prefix logic
+    socket.emit("join", user.id); 
   }
 };
 
