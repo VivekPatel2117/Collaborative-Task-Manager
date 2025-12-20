@@ -2,27 +2,19 @@ import { Request, Response } from "express";
 import { authService } from "../services/auth.service";
 import { registerDto, loginDto } from "../dto/auth.dto";
 
-const COOKIE_OPTIONS = {
-  httpOnly: true,
-  secure: true,                 // MUST be HTTPS
-  sameSite: "none" as const,    // REQUIRED for mobile Safari
-  maxAge: 24 * 60 * 60 * 1000,
-  path: "/",                    // important
-};
-
-
 export const authController = {
   async register(req: Request, res: Response) {
     const data = registerDto.parse(req.body);
 
     const { user, token } = await authService.register(data);
 
-    res.cookie("token", token, COOKIE_OPTIONS);
-
     res.status(201).json({
-      id: user.id,
-      name: user.name,
-      email: user.email,
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      },
     });
   },
 
@@ -31,31 +23,28 @@ export const authController = {
 
     const { user, token } = await authService.login(data);
 
-    res.cookie("token", token, COOKIE_OPTIONS);
-
     res.json({
-      id: user.id,
-      name: user.name,
-      email: user.email,
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      },
     });
   },
-  async  getMe(req: Request, res: Response) {
-  const userId = req.user?.id;
-  console.log("User ID from token:", userId);
-  if (!userId) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
 
-  const user = await authService.getMe(userId);
+  async getMe(req: Request, res: Response) {
+    const userId = req.user?.id;
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
 
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
-  }
+    const user = await authService.getMe(userId);
+    res.json(user);
+  },
 
-  res.json(user);
-},
   logout(req: Request, res: Response) {
-    res.clearCookie("token");
+    // client deletes token
     res.json({ message: "Logged out" });
   },
 };

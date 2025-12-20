@@ -5,22 +5,24 @@ export const authMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction
-): void | Response => {
-  const token = req.cookies?.token as string | undefined;
-  if (!token) {
+) => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res.status(401).json({ message: "Unauthorized" });
   }
+
+  const token = authHeader.split(" ")[1];
 
   try {
     const payload = verifyToken(token);
 
-    // attach user to request (typed via declaration merging)
     req.user = {
       id: payload.userId,
     };
 
     next();
-  } catch (error) {
+  } catch {
     return res.status(401).json({ message: "Invalid token" });
   }
 };
