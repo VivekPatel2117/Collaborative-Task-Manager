@@ -5,7 +5,7 @@ import TaskTable from "@/components/Dashboard/TaskTable";
 import TaskFilters from "@/components/Dashboard/TaskFilters";
 import TaskStats from "@/components/Dashboard/TaskStats";
 import { getTasks } from "@/services/task.service";
-import type { Priority, Status, Task } from "@/types/task";
+import type { Priority, Status } from "@/types/task";
 import { useAuth } from "@/hooks/useAuth";
 import DashboardSkeleton from "@/components/skeletons/DashboardSkeleton";
 
