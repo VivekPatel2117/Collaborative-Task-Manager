@@ -8,6 +8,13 @@
     "esModuleInterop": true,
     "skipLibCheck": true
   },
+  "typedocOptions": {
+    "entryPoints": ["src"], // Point to your main entry file
+    "entryPointStrategy": "expand", // This will recursively find all documented files in src
+    "out": "docs",                  // Folder where the website will be generated
+    "name": "Vivek's Auth API",
+    "hideGenerator": true
+  },
   "include": ["src/**/*.ts", "prisma/prisma.config.ts"],
   "exclude": ["node_modules", "dist"]
 }

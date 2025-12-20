@@ -7,7 +7,8 @@
     "dev": "ts-node-dev --respawn --transpile-only --files src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "prisma:generate": "prisma generate"
+    "prisma:generate": "prisma generate",
+    "generate-docs": "typedoc"
   },
   "keywords": [],
   "author": "",
@@ -36,6 +37,7 @@
     "jest": "^30.2.0",
     "ts-jest": "^29.4.6",
     "ts-node-dev": "^2.0.0",
+    "typedoc": "^0.28.15",
     "typescript": "^5.9.3"
   }
 }

@@ -4,12 +4,12 @@ import { registerDto, loginDto } from "../dto/auth.dto";
 
 const COOKIE_OPTIONS = {
   httpOnly: true,
-  secure: true,
-  sameSite: "lax" as const, // Use "lax" for subdomains; it's more reliable than "none"
-  domain: ".my-app.com",    // The dot before the name allows all subdomains
+  secure: true,                 // MUST be HTTPS
+  sameSite: "none" as const,    // REQUIRED for mobile Safari
   maxAge: 24 * 60 * 60 * 1000,
-  partitioned: true         // Keep this for extra compatibility
-}
+  path: "/",                    // important
+};
+
 
 export const authController = {
   async register(req: Request, res: Response) {
