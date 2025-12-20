@@ -7,6 +7,11 @@ import type { Task } from "@/types/task";
 
 export const useTaskSocket = () => {
   useEffect(() => {
+    // 🚩 Add this to see what the browser thinks the URL is
+    console.log("🛠️ Attempting to connect to:", import.meta.env.VITE_API_URL);
+    
+   
+    
     const { addTask, updateTask, removeTask } = useTaskStore.getState();
     const { addNotification } = useNotificationStore.getState();
 
