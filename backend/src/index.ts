@@ -6,8 +6,12 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "*",
-  },
+    // 🛑 WARNING: Do not use "*" in production with credentials
+    // Replace this with your ACTUAL Vercel URL
+    origin: ["https://collaborative-task-manager-vert.vercel.app", "http://localhost:5173"],
+    methods: ["GET", "POST"],
+    credentials: true
+  }
 });
 
 io.on("connection", (socket) => {
