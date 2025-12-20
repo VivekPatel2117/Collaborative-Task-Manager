@@ -1,15 +1,5 @@
 import { create } from "zustand";
-
-/** 🔹 Task type (adjust if needed) */
-export type Task = {
-  id: string;
-  title: string;
-  description: string;
-  status: string;
-  priority: string;
-  assignedToId: string;
-};
-
+import type { Task } from "@/types/task";
 type TaskStore = {
   tasks: Task[];
   setTasks: (tasks: Task[]) => void;

@@ -96,7 +96,6 @@ export const deleteTask = async (id: string): Promise<void> => {
     await apiFetch<void>(`/api/tasks/${id}`, {
       method: "DELETE",
     });
-    toast.success("Task deleted successfully");
   } catch (error) {
     handleApiError(error);
     throw error;

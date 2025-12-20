@@ -12,7 +12,6 @@ export async function apiFetch<T>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<T> {
-  console.log(authToken)
   const res = await fetch(`${API_URL}${endpoint}`, {
     ...options,
     headers: {

@@ -23,14 +23,11 @@ const queryClient = new QueryClient({
   },
 });
 
+const savedToken = sessionStorage.getItem("token");
+if (savedToken) {
+  setAuthToken(savedToken);
+}
 export default function App() {
-  // ✅ STEP 2: Restore token on app load
-  useEffect(() => {
-    const savedToken = sessionStorage.getItem("token");
-    if (savedToken) {
-      setAuthToken(savedToken);
-    }
-  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
